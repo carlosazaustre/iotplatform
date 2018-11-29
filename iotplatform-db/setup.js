@@ -1,9 +1,25 @@
 'use strict'
 
 const debug = require('debug')('iotplatform:db:setup')
+const inquirer = require('inquirer')
+const chalk = require('chalk')
 const db = require('./')
 
+const prompt = inquirer.createPromptModule()
+
 async function setup () {
+  const answer = await prompt([
+    {
+      type: 'confirm',
+      name: 'setup',
+      message: 'This will destroy your Database. Are you sure?'
+    }
+  ])
+
+  if (!answer.setup) {
+    return console.log('Nothing happended :)')
+  }
+
   const config = {
     database: process.env.DB_NAME || 'iotplatform',
     username: process.env.DB_USER || 'iotplatform',
@@ -15,12 +31,12 @@ async function setup () {
   }
 
   await db(config).catch(handleFatalError)
-  console.log('Success!')
+  console.log(`${chalk.green('success!')}`)
   process.exit(0)
 }
 
 function handleFatalError (err) {
-  console.error(err.message)
+  console.error(`${chalk.red('[fatal error]')} ${err.message}`)
   console.error(err.stack)
   process.exit(1)
 }
