@@ -44,7 +44,7 @@ let newAgent = {
 
 test.beforeEach(async () => {
   sandbox = sinon.createSandbox()
-  
+
   AgentStub = {
     hasMany: sandbox.spy()
   }
