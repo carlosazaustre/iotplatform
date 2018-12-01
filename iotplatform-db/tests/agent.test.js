@@ -14,14 +14,32 @@ let MetricStub = {
 
 let id = 1
 let uuid = 'yyy-yyy-yyy'
-let single = Object.assign({}, agentFixtures.single)
 let AgentStub = null
 let db = null
 let sandbox = null
+
+
+let single = Object.assign({}, agentFixtures.single)
+
+let connectedArgs = {
+  where: { connected: true }
+}
+
+let usernameArgs = {
+  where: { username: 'iotplatform', connected: true }
+}
+
 let uuidArgs = {
-  where: {
-    uuid
-  }
+  where: { uuid }
+}
+
+let newAgent = {
+  uuid: '123-123-123',
+  name: 'test',
+  username: 'test',
+  hostname: 'test',
+  pid: 0,
+  connected: false
 }
 
 test.beforeEach(async () => {
@@ -32,7 +50,9 @@ test.beforeEach(async () => {
 
   // Model create Stub
   AgentStub.findOne = sandbox.stub()
-  AgentStub.findOne.withArgs(uuidArgs).returns(Promise.resolve(agentFixtures.byUuid(uuid)))
+  AgentStub.findOne.withArgs(uuidArgs).returns(Promise.resolve({
+    toJSON () { return newAgent }
+  }))
 
   // Model update Stub
   AgentStub.update = sandbox.stub()
@@ -41,6 +61,12 @@ test.beforeEach(async () => {
   // Model findbyId Stub
   AgentStub.findById = sandbox.stub()
   AgentStub.findById.withArgs(id).returns(Promise.resolve(agentFixtures.byId(id)))
+
+  // Model findAll Stub
+  AgentStub.findAll = sandbox.stub()
+  AgentStub.findAll.withArgs().returns(Promise.resolve(agentFixtures.all))
+  AgentStub.findAll.withArgs(connectedArgs).returns(Promise.resolve(agentFixtures.connected))
+  AgentStub.findAll.withArgs(usernameArgs).returns(Promise.resolve(agentFixtures.iotplatform))
 
   const setupDatabase = proxyquire('../', {
     './models/agent': () => AgentStub,
@@ -73,6 +99,16 @@ test.serial('Agent#findById', async t => {
   t.true(AgentStub.findById.calledWith(id), 'findById should be called with args')
 
   t.deepEqual(agent, agentFixtures.byId(id), 'should be the same')
+})
+
+test.serial('Agent#findByUuid', async t => {
+  let agent = await db.Agent.findByUuid(uuid)
+
+  t.true(AgentStub.findOne.called, 'findOne should be called on model')
+  t.true(AgentStub.findOne.calledOnce, 'findOne should be called once')
+  t.true(AgentStub.findOne.calledWith(uuidArgs), 'findOne should be called with uuid args')
+
+  t.deepEqual(agent, agentFixtures.byUuid(uuid), 'agent should be the same')
 })
 
 test.serial('Agent#createOrUpdate', async t => {
