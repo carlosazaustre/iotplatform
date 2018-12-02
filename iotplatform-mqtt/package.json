@@ -26,6 +26,7 @@
     "chalk": "^2.4.1",
     "debug": "^4.1.0",
     "mosca": "^2.8.3",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "iotplatform-db": "file:../iotplatform-db"
   }
 }
