@@ -4,6 +4,7 @@ const debug = require('debug')('iotplatform:db:setup')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const db = require('./')
+const config = require('../config')
 
 const prompt = inquirer.createPromptModule()
 
@@ -22,14 +23,9 @@ async function setup () {
     }
   }
 
-  const config = {
-    database: process.env.DB_NAME || 'iotplatform',
-    username: process.env.DB_USER || 'iotplatform',
-    password: process.env.DB_PASS || 'iotplatform',
-    host: process.env.DB_HOST || 'localhost',
-    dialect: 'postgres',
-    logging: s => debug(s),
-    setup: true
+  config.setup = true
+  config.logging = function (s) {
+    return debug(s)
   }
 
   await db(config).catch(handleFatalError)

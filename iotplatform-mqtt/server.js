@@ -6,6 +6,7 @@ const redis = require('redis')
 const chalk = require('chalk')
 const db = require('iotplatform-db')
 const { parsePayload } = require('./utils')
+const config = require('../config')
 
 const backend = {
   type: 'redis',
@@ -18,17 +19,12 @@ const settings = {
   backend
 }
 
-const config = {
-  database: process.env.DB_NAME || 'iotplatform',
-  username: process.env.DB_USER || 'iotplatform',
-  password: process.env.DB_PASS || 'iotplatform',
-  host: process.env.DB_HOST || 'localhost',
-  dialect: 'postgres',
-  logging: s => debug(s)
-}
-
 const server = new mosca.Server(settings)
 const clients = new Map()
+
+config.logging = function (s) {
+  return debug(s)
+}
 
 let Agent, Metric
 
