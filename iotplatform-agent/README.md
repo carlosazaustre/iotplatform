@@ -6,19 +6,35 @@
 const IoTPlatformAgent = require('iotplatform-agent')
 
 const agent = new IoTPlatformAgent({
+  name: 'myapp',
+  username: 'admin',
   interval: 2000
+})
+
+agent.addMetric('rss', function getRss () {
+  return process.memoryUsage().rss
+})
+
+agent.addMetric('promiseMetric', function getRandomPromise() {
+  return Promise.resolve(Math.random())
+})
+
+agent.addMetric('callbackMetric', function getRandomCallback (callback) {
+  setTimeout(() => {
+    callback(null, Math.random())
+  }, 1000)
 })
 
 agent.connect()
 
 // This agent only
-agent.on('connected')
-agent.on('disconnected')
-agent.on('message')
+agent.on('connected', handler)
+agent.on('disconnected', handler)
+agent.on('message', handler)
 
-// Other agents
-agent.on('agent/connected')
-agent.on('agent/disconnected')
+// Other agents via MQTT server
+agent.on('agent/connected', handler)
+agent.on('agent/disconnected', handler)
 agent.on('agent/message', payload => {
   console.log(payload)
 })
