@@ -5,7 +5,8 @@ const mosca = require('mosca')
 const redis = require('redis')
 const chalk = require('chalk')
 const db = require('iotplatform-db')
-const { parsePayload } = require('./utils')
+
+const { parsePayload } = require('../utils')
 const config = require('../config')
 
 const backend = {
