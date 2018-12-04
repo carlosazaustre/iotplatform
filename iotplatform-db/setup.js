@@ -4,7 +4,9 @@ const debug = require('debug')('iotplatform:db:setup')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const db = require('./')
+
 const config = require('../config')
+const { handleFatalError } = require('../errors')
 
 const prompt = inquirer.createPromptModule()
 
@@ -31,12 +33,6 @@ async function setup () {
   await db(config).catch(handleFatalError)
   console.log(`${chalk.green('success!')}`)
   process.exit(0)
-}
-
-function handleFatalError (err) {
-  console.error(`${chalk.red('[fatal error]')} ${err.message}`)
-  console.error(err.stack)
-  process.exit(1)
 }
 
 setup()

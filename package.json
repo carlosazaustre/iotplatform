@@ -1,0 +1,22 @@
+{
+  "name": "iotplatform",
+  "version": "1.0.0",
+  "description": "A simple IoT Platform",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosazaustre/iotplatform.git"
+  },
+  "author": "Carlos Azaustre <cazaustre@gmail.com> (https://carlosazaustre.es)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/carlosazaustre/iotplatform/issues"
+  },
+  "homepage": "https://github.com/carlosazaustre/iotplatform#readme",
+  "dependencies": {
+    "chalk": "^2.4.1"
+  }
+}

@@ -7,6 +7,7 @@ const chalk = require('chalk')
 const db = require('iotplatform-db')
 
 const { parsePayload } = require('../utils')
+const { handleError, handleFatalError } = require('../errors')
 const config = require('../config')
 
 const backend = {
@@ -131,14 +132,3 @@ server.on('published', async (packet, client) => {
 server.on('error', handleFatalError)
 process.on('uncaughtException', handleFatalError)
 process.on('unhandledRejection', handleFatalError)
-
-function handleFatalError (err) {
-  console.error(`${chalk.red('[fatal error]')} ${err.message}`)
-  console.error(err.stack)
-  process.exit(1)
-}
-
-function handleError (err) {
-  console.error(`${chalk.red('[error]')} ${err.message}`)
-  console.error(err.stack)
-}

@@ -1,6 +1,7 @@
 'use strict'
 
 const db = require('../')
+const { handleFatalError } = require('../../errors')
 
 async function run () {
   const config = {
@@ -43,12 +44,6 @@ async function run () {
   const metricsByType = await Metric.findByTypeAgentUuid('memory', agent.uuid).catch(handleFatalError)
   console.log('----metrics by type----')
   console.log(metricsByType)
-}
-
-function handleFatalError (err) {
-  console.error(err.message)
-  console.error(err.stack)
-  process.exit(1)
 }
 
 run()

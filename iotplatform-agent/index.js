@@ -52,7 +52,7 @@ class IoTPlatformAgent extends EventEmitter {
       this._client.on('connect', () => {
         this._agentId = uuid.v4()
         this.emit('connected')
-  
+
         this._timer = setInterval(async () => {
           if (this._metrics.size > 0) {
             let message = {
