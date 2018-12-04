@@ -65,24 +65,23 @@ class IoTPlatformAgent extends EventEmitter {
               metrics: [],
               timestamp: new Date().getTime()
             }
-          }
-          
-          for (let [ metric, fn ] of this._metrics) {
-            if (fn.length == 1) {
-              // Is a callback
-              fn = util.promisify(fn)
+
+            for (let [ metric, fn ] of this._metrics) {
+              if (fn.length === 1) {
+                fn = util.promisify(fn)
+              }
+
+              message.metrics.push({
+                type: metric,
+                value: await Promise.resolve(fn())
+              })
             }
 
-            message.metrics.push({
-              type: metric,
-              value: await Promise.resolve(fn())
-            })
+            debug('Sending', message)
+
+            this._client.publish('agent/message', JSON.stringify(message))
+            this.emit('message', message)
           }
-
-          debug('Sending ', message)
-
-          this._client.publish('agent/message', JSON.stringify(message))
-          this.emit('message', message)
         }, opts.interval)
       })
 

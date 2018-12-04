@@ -1,9 +1,4 @@
-# iotplatform-agent
-
-## Usage
-
-```js
-const IoTPlatformAgent = require('iotplatform-agent')
+const IoTPlatformAgent = require('../')
 
 const agent = new IoTPlatformAgent({
   name: 'myapp',
@@ -15,7 +10,7 @@ agent.addMetric('rss', function getRss () {
   return process.memoryUsage().rss
 })
 
-agent.addMetric('promiseMetric', function getRandomPromise() {
+agent.addMetric('promiseMetric', function getRandomPromise () {
   return Promise.resolve(Math.random())
 })
 
@@ -41,5 +36,4 @@ function handler (payload) {
   console.log(payload)
 }
 
-setTimeout(() => agent.disconnect(), 20000)
-```
+setTimeout(() => agent.disconnect(), 10000)
