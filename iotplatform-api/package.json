@@ -5,6 +5,7 @@
   "description": "A single IoT Platform - API module",
   "main": "server.js",
   "scripts": {
+    "test": "DEBUG=iotplatform:* ava tests/ --verbose",
     "lint": "standard",
     "start:dev": "DEBUG=iotplatform* nodemon server.js",
     "start": "NODE_ENV=production node server.js"
@@ -20,8 +21,10 @@
   },
   "homepage": "https://github.com/carlosazaustre/iotplatform#readme",
   "devDependencies": {
+    "ava": "^0.25.0",
     "nodemon": "^1.18.7",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "supertest": "^3.3.0"
   },
   "dependencies": {
     "chalk": "^2.4.1",

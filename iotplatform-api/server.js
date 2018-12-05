@@ -25,9 +25,13 @@ app.use((err, req, res, next) => {
   res.status(500).send({ error: err.message })
 })
 
-process.on('uncaughtException', handleFatalError)
-process.on('unhandledRejection', handleFatalError)
+if (!module.parent) {
+  process.on('uncaughtException', handleFatalError)
+  process.on('unhandledRejection', handleFatalError)
 
-server.listen(port, () => {
-  console.log(`${chalk.green('[iotplatform-api]')} server listening on port ${port}`)
-})
+  server.listen(port, () => {
+    console.log(`${chalk.green('[iotplatform-api]')} server listening on port ${port}`)
+  })
+}
+
+module.exports = server
