@@ -5,14 +5,16 @@ const { handleFatalError } = require('../../errors')
 
 async function run () {
   const config = {
-    database: process.env.DB_NAME || 'iotplatform',
-    username: process.env.DB_USER || 'iotplatform',
-    password: process.env.DB_PASS || 'iotplatform',
-    host: process.env.DB_HOST || 'localhost',
-    dialect: 'postgres'
+    db: {
+      database: process.env.DB_NAME || 'iotplatform',
+      username: process.env.DB_USER || 'iotplatform',
+      password: process.env.DB_PASS || 'iotplatform',
+      host: process.env.DB_HOST || 'localhost',
+      dialect: 'postgres'
+    }
   }
 
-  const { Agent, Metric } = await db(config).catch(handleFatalError)
+  const { Agent, Metric } = await db(config.db).catch(handleFatalError)
 
   const agent = await Agent.createOrUpdate({
     uuid: 'vvv',

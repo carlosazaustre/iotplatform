@@ -31,7 +31,7 @@ config.logging = function (s) {
 let Agent, Metric
 
 server.on('ready', async () => {
-  const services = await db(config).catch(handleFatalError)
+  const services = await db(config.db).catch(handleFatalError)
   Agent = services.Agent
   Metric = services.Metric
 

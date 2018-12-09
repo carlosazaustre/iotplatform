@@ -30,7 +30,7 @@ async function setup () {
     return debug(s)
   }
 
-  await db(config).catch(handleFatalError)
+  await db(config.db).catch(handleFatalError)
   console.log(`${chalk.green('success!')}`)
   process.exit(0)
 }
