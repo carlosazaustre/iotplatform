@@ -1,9 +1,13 @@
 {
-  "name": "iotplatform",
+  "name": "iotplatform-web",
   "version": "1.0.0",
-  "description": "A simple IoT Platform",
-  "main": "",
-  "scripts": {},
+  "description": "A simple IoT Platform - Web Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "start:dev": "DEBUG=iotplatform:* nodemon server.js",
+    "lint": "standard"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/carlosazaustre/iotplatform.git"
@@ -16,6 +20,11 @@
   "homepage": "https://github.com/carlosazaustre/iotplatform#readme",
   "dependencies": {
     "chalk": "^2.4.1",
-    "debug": "^4.1.0"
+    "debug": "^4.1.0",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7",
+    "standard": "^12.0.1"
   }
 }
