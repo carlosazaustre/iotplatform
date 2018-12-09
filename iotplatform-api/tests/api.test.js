@@ -59,11 +59,16 @@ test.serial.cb('/api/agents', t => {
     })
 })
 
+test.serial.todo('/api/agents - not authorized')
+test.serial.todo('/api/agents')
+test.serial.todo('/api/agent/:uuid - not authorized')
 test.serial.todo('/api/agent/:uuid')
-test.serial.todo('/api/agent.:uuid - not found')
+test.serial.todo('/api/agent/:uuid - not found')
 
+test.serial.todo('/api/metrics/:uuid - not authorized')
 test.serial.todo('/api/metrics/:uuid')
-test.serial.todo('/api/metrics.:uuid - not found')
+test.serial.todo('/api/metrics/:uuid - not found')
 
+test.serial.todo('/api/metrics/:uuid/:type - not authorized')
 test.serial.todo('/api/metrics/:uuid/:type')
-test.serial.todo('/api/metrics.:uuid/:type - not found')
+test.serial.todo('/api/metrics/:uuid/:type - not found')
