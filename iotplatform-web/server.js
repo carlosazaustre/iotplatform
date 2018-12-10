@@ -4,19 +4,23 @@ const debug = require('debug')('iotplatform:web')
 const http = require('http')
 const path = require('path')
 const express = require('express')
+const asyncify = require('express-asyncify')
 const socketio = require('socket.io')
 const chalk = require('chalk')
 const IotPlatformAgent = require('iotplatform-agent')
-const { handleFatalError } = require('../errors')
+const { handleExpressError, handleFatalError } = require('../errors')
 const { pipe } = require('./utils')
+const proxy = require('./proxy')
 
 const port = process.env.PORT || 8080
-const app = express()
+const app = asyncify(express())
 const server = http.createServer(app)
 const io = socketio(server)
 const agent = new IotPlatformAgent()
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/', proxy)
+app.use(handleExpressError)
 
 // Socket.io / Websockets
 io.on('connect', socket => {
