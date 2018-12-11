@@ -12,7 +12,7 @@ const { parsePayload } = require('../utils')
 
 const options = {
   name: 'untitled',
-  username: 'iotplatform',
+  username: 'iot',
   interval: 5000,
   mqtt: {
     host: 'mqtt://localhost'
@@ -51,7 +51,7 @@ class IoTPlatformAgent extends EventEmitter {
 
       this._client.on('connect', () => {
         this._agentId = uuid.v4()
-        this.emit('connected')
+        this.emit('connected', this._agentId)
 
         this._timer = setInterval(async () => {
           if (this._metrics.size > 0) {

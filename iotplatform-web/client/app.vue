@@ -1,6 +1,9 @@
 <template>
   <div>
-    <iot-metric uuid="188eedf0-079c-43c9-867d-f71291588d1b" type="callbackMetric" :socket="socket"></iot-metric>
+    <iot-agent
+      uuid="dd9b2f43-bc96-483a-84b9-023c3ef29acb"
+      :socket="socket">
+    </iot-agent>
     <iot-agent
       v-for="agent in agents"
       :uuid="agent.uuid"

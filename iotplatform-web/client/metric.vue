@@ -32,7 +32,7 @@ module.exports = {
     }
   },
 
-  created () {
+  mounted () {
     this.initialize()
   },
 
