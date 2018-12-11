@@ -8,7 +8,7 @@ const asyncify = require('express-asyncify')
 const socketio = require('socket.io')
 const chalk = require('chalk')
 const IotPlatformAgent = require('iotplatform-agent')
-const { handleExpressError, handleFatalError } = require('../errors')
+const { errors } = require('iotplatform-utils')
 const { pipe } = require('./utils')
 const proxy = require('./proxy')
 
@@ -20,7 +20,7 @@ const agent = new IotPlatformAgent()
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', proxy)
-app.use(handleExpressError)
+app.use(errors.handleExpressError)
 
 // Socket.io / Websockets
 io.on('connect', socket => {
@@ -34,5 +34,5 @@ server.listen(port, () => {
   agent.connect()
 })
 
-process.on('uncaughtException', handleFatalError)
-process.on('unhandledRejection', handleFatalError)
+process.on('uncaughtException', errors.handleFatalError)
+process.on('unhandledRejection', errors.handleFatalError)

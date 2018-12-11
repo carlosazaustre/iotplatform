@@ -6,8 +6,8 @@ const asyncify = require('express-asyncify')
 const auth = require('express-jwt')
 const guard = require('express-jwt-permissions')()
 const db = require('iotplatform-db')
+const { config } = require('iotplatform-utils')
 
-const config = require('../config')
 const api = asyncify(express.Router())
 
 let services, Agent, Metric

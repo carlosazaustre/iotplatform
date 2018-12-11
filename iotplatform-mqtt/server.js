@@ -5,10 +5,7 @@ const mosca = require('mosca')
 const redis = require('redis')
 const chalk = require('chalk')
 const db = require('iotplatform-db')
-
-const { parsePayload } = require('../utils')
-const { handleError, handleFatalError } = require('../errors')
-const config = require('../config')
+const { config, errors, utils } = require('iotplatform-utils')
 
 const backend = {
   type: 'redis',
@@ -31,7 +28,7 @@ config.logging = function (s) {
 let Agent, Metric
 
 server.on('ready', async () => {
-  const services = await db(config.db).catch(handleFatalError)
+  const services = await db(config.db).catch(errors.handleFatalError)
   Agent = services.Agent
   Metric = services.Metric
 
@@ -54,7 +51,7 @@ server.on('clientDisconnected', async client => {
     try {
       await Agent.createOrUpdate(agent)
     } catch (err) {
-      return handleError(err)
+      return errors.handleError(err)
     }
 
     // Delete Agent from Clients list
@@ -82,7 +79,7 @@ server.on('published', async (packet, client) => {
       break
     case 'agent/message':
       debug(`Payload: ${packet.payload}`)
-      const payload = parsePayload(packet.payload)
+      const payload = utils.parsePayload(packet.payload)
 
       if (payload) {
         payload.agent.connected = true
@@ -129,6 +126,6 @@ server.on('published', async (packet, client) => {
   }
 })
 
-server.on('error', handleFatalError)
-process.on('uncaughtException', handleFatalError)
-process.on('unhandledRejection', handleFatalError)
+server.on('error', errors.handleFatalError)
+process.on('uncaughtException', errors.handleFatalError)
+process.on('unhandledRejection', errors.handleFatalError)

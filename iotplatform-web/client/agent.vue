@@ -22,7 +22,7 @@
 
 <script>
 const request = require('request-promise-native')
-const config = require('../../config')
+const { config } = require('iotplatform-utils')
 
 const IotMetric = require('./metric.vue')
 
@@ -43,7 +43,6 @@ module.exports = {
   },
 
   mounted () {
-    console.log('Mounted')
     this.initialize()
   },
 
@@ -61,7 +60,6 @@ module.exports = {
       let agent
       try {
         agent = await request(options)
-        console.log('Agent (Component)', agent)
       } catch (err) {
         this.error = err.error.error
         return

@@ -4,10 +4,8 @@ const debug = require('debug')('iotplatform:db:setup')
 const inquirer = require('inquirer')
 const chalk = require('chalk')
 const minimist = require('minimist')
+const { config, errors } = require('iotplatform-utils')
 const db = require('./')
-
-const config = require('../config')
-const { handleFatalError } = require('../errors')
 
 const args = minimist(process.argv)
 const prompt = inquirer.createPromptModule()
@@ -20,7 +18,7 @@ async function setup () {
         name: 'setup',
         message: 'This will destroy your Database. Are you sure?'
       }
-    ]).catch(handleFatalError)
+    ]).catch(errors.handleFatalError)
 
     if (!answer.setup) {
       return console.log(`${chalk.blue('Nothing happended :)')}`)
@@ -32,7 +30,7 @@ async function setup () {
     return debug(s)
   }
 
-  await db(config.db).catch(handleFatalError)
+  await db(config.db).catch(errors.handleFatalError)
   console.log(`${chalk.green('success!')}`)
   process.exit(0)
 }

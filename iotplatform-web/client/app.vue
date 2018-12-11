@@ -17,7 +17,7 @@
 <script>
 const request = require('request-promise-native')
 const io = require('socket.io-client')
-const config = require('../../config')
+const { config } = require('iotplatform-utils')
 
 const IotAgent = require('./agent.vue')
 const IotMetric = require('./metric.vue')

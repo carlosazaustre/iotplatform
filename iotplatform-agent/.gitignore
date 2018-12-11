@@ -1,7 +1,0 @@
-node_modules
-coverage
-.DS_Store
-.vscode
-.idea
-*.log
-.nyc_output

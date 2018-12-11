@@ -4,7 +4,7 @@ const debug = require('debug')('iotplatform:web:proxy')
 const express = require('express')
 const asyncify = require('express-asyncify')
 const request = require('request-promise-native')
-const config = require('../config')
+const { config } = require('iotplatform-utils')
 
 const proxy = asyncify(express.Router())
 

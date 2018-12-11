@@ -1,11 +1,10 @@
 'use strict'
 
-const debug = require('debug')('iotplatform:api')
 const http = require('http')
 const express = require('express')
 const asyncify = require('express-asyncify')
 const chalk = require('chalk')
-const { handleExpressError, handleFatalError } = require('../errors')
+const { errors } = require('iotplatform-utils')
 
 const api = require('./api')
 
@@ -14,11 +13,11 @@ const app = asyncify(express())
 const server = http.createServer(app)
 
 app.use('/api', api)
-app.use(handleExpressError)
+app.use(errors.handleExpressError)
 
 if (!module.parent) {
-  process.on('uncaughtException', handleFatalError)
-  process.on('unhandledRejection', handleFatalError)
+  process.on('uncaughtException', errors.handleFatalError)
+  process.on('unhandledRejection', errors.handleFatalError)
 
   server.listen(port, () => {
     console.log(`${chalk.green('[iotplatform-api]')} server listening on port ${port}`)

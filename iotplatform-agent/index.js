@@ -7,8 +7,7 @@ const mqtt = require('mqtt')
 const defaults = require('defaults')
 const uuid = require('uuid')
 const EventEmitter = require('events')
-
-const { parsePayload } = require('../utils')
+const { utils } = require('iotplatform-utils')
 
 const options = {
   name: 'untitled',
@@ -87,7 +86,7 @@ class IoTPlatformAgent extends EventEmitter {
       })
 
       this._client.on('message', (topic, payload) => {
-        payload = parsePayload(payload)
+        payload = utils.parsePayload(payload)
 
         let broadcast = false
         switch (topic) {
