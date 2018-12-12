@@ -8,14 +8,18 @@ const asyncify = require('express-asyncify')
 const socketio = require('socket.io')
 const chalk = require('chalk')
 const IotPlatformAgent = require('iotplatform-agent')
-const { utils, errors } = require('iotplatform-utils')
+const { config, utils, errors } = require('iotplatform-utils')
 const proxy = require('./lib/proxy')
 
 const port = process.env.PORT || 8080
 const app = asyncify(express())
 const server = http.createServer(app)
 const io = socketio(server)
-const agent = new IotPlatformAgent()
+const agent = new IotPlatformAgent({
+  mqtt: {
+    host: config.proxy.mqttHost
+  }
+})
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', proxy)
