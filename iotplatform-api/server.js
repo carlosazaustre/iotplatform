@@ -6,7 +6,7 @@ const asyncify = require('express-asyncify')
 const chalk = require('chalk')
 const { errors } = require('iotplatform-utils')
 
-const api = require('./api')
+const api = require('./lib/api')
 
 const port = process.env.PORT || 3000
 const app = asyncify(express())

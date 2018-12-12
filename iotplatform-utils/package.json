@@ -21,6 +21,7 @@
   "homepage": "https://github.com/carlosazaustre/iotplatform#readme",
   "dependencies": {
     "chalk": "^2.4.1",
-    "debug": "^4.1.0"
+    "debug": "^4.1.0",
+    "jsonwebtoken": "^8.4.0"
   }
 }

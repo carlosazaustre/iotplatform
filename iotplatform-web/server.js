@@ -8,9 +8,8 @@ const asyncify = require('express-asyncify')
 const socketio = require('socket.io')
 const chalk = require('chalk')
 const IotPlatformAgent = require('iotplatform-agent')
-const { errors } = require('iotplatform-utils')
-const { pipe } = require('./utils')
-const proxy = require('./proxy')
+const { utils, errors } = require('iotplatform-utils')
+const proxy = require('./lib/proxy')
 
 const port = process.env.PORT || 8080
 const app = asyncify(express())
@@ -26,7 +25,7 @@ app.use(errors.handleExpressError)
 io.on('connect', socket => {
   debug(`Connected ${socket.id}`)
 
-  pipe(agent, socket)
+  utils.pipe(agent, socket)
 })
 
 server.listen(port, () => {
